@@ -1,11 +1,13 @@
 package com.example.starter.adapter.out.persistence;
 
+import io.reactivex.Completable;
 import io.reactivex.Observable;
 import io.vertx.reactivex.ext.jdbc.JDBCClient;
 import io.vertx.core.json.JsonArray;
 import io.vertx.core.json.JsonObject;
 import io.vertx.ext.sql.ResultSet;
 import io.vertx.reactivex.core.Vertx;
+import rx.Single;
 
 
 public abstract class CrudRepository<T,ID> implements CrudBaseRepository<T>{
@@ -24,5 +26,13 @@ public abstract class CrudRepository<T,ID> implements CrudBaseRepository<T>{
         .map(this::wrapJsonToObject)
         .doAfterTerminate(conn::close)
       );
+  }
+
+  protected Completable executeQuery(String query, JsonArray params) {
+    return jdbcClient.rxGetConnection()
+      .flatMapCompletable(conn -> conn
+        .rxUpdateWithParams(query, params)
+        .ignoreElement()
+        .doAfterTerminate(conn::close));
   }
 }

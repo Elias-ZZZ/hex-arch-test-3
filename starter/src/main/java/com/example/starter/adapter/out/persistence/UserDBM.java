@@ -17,6 +17,12 @@ public class UserDBM {
     this.password = password;
   }
 
+  public UserDBM(String name, String nickName, String password) {
+    this.name = name;
+    this.nickName = nickName;
+    this.password = password;
+  }
+
   public UserDBM(JsonObject json) {
     UserDBMConverter.fromJson(json,this);
   }

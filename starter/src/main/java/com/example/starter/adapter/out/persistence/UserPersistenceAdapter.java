@@ -30,6 +30,7 @@ public class UserPersistenceAdapter implements LoadUserListPort, RegisterNewUser
 
   @Override
   public void registerNewUser(User user) {
-
+    UserDBM dbm = new UserDBM(user.getName(),user.getNickName(),user.getPassword());
+    userRepository.saveNewUser(dbm).blockingAwait();
   }
 }
