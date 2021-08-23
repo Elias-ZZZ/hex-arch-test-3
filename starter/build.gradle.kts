@@ -5,6 +5,7 @@ plugins {
   java
   application
   id("com.github.johnrengelman.shadow") version "7.0.0"
+  id("io.vertx.vertx-plugin") version "1.3.0"
 }
 
 group = "com.example"
@@ -12,6 +13,8 @@ version = "1.0.0-SNAPSHOT"
 
 repositories {
   mavenCentral()
+  mavenLocal()
+  jcenter()
 }
 
 val vertxVersion = "4.1.2"
@@ -25,6 +28,10 @@ val doOnChange = "${projectDir}/gradlew classes"
 
 application {
   mainClass.set(launcherClassName)
+}
+
+vertx {
+  mainVerticle = mainVerticleName
 }
 
 dependencies {
@@ -45,6 +52,10 @@ dependencies {
   implementation("io.vertx:vertx-mongo-client")
   testImplementation("io.vertx:vertx-unit")
   testImplementation("junit:junit:4.13.1")
+
+  annotationProcessor("io.vertx:vertx-rx-java2-gen:$vertxVersion")
+  //annotationProcessor("io.vertx:vertx-service-proxy:$vertxVersion:processor")
+  annotationProcessor("io.vertx:vertx-codegen:$vertxVersion:processor")
 }
 
 java {
