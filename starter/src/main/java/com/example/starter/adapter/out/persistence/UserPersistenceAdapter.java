@@ -4,7 +4,6 @@ package com.example.starter.adapter.out.persistence;
 import com.example.starter.application.ports.out.LoadUserListPort;
 import com.example.starter.application.ports.out.RegisterNewUserPort;
 import com.example.starter.domain.User;
-import io.vertx.core.Future;
 
 import java.util.List;
 
