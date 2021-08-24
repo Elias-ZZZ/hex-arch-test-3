@@ -32,6 +32,10 @@ application {
 
 vertx {
   mainVerticle = mainVerticleName
+  redeploy = false
+  vertxVersion = vertxVersion
+  launcher = launcherClassName
+
 }
 
 dependencies {
@@ -55,7 +59,36 @@ dependencies {
 
   annotationProcessor("io.vertx:vertx-rx-java2-gen:$vertxVersion")
   //annotationProcessor("io.vertx:vertx-service-proxy:$vertxVersion:processor")
-  annotationProcessor("io.vertx:vertx-codegen:$vertxVersion:processor")
+  compileOnly("io.vertx:vertx-codegen:$vertxVersion")
+  annotationProcessor("io.vertx:vertx-codegen:$vertxVersion")
+}
+
+tasks.register<JavaCompile>("annotationProcessing") {
+  group = "build"
+
+  source = sourceSets.getByName(SourceSet.MAIN_SOURCE_SET_NAME).java
+  destinationDir = project.file("${project.projectDir}/src/generated/main/java")
+  classpath = configurations.compileClasspath.get()
+  options.annotationProcessorPath = configurations.compileClasspath.get()
+  options.compilerArgs = listOf(
+    "-proc:only",
+    "-processor", "io.vertx.codegen.CodeGenProcessor",
+    "-Acodegen.output=${project.projectDir}/src/main"
+  )
+}
+
+tasks.compileJava {
+  dependsOn(tasks.named("annotationProcessing"))
+  source += sourceSets.getByName(SourceSet.MAIN_SOURCE_SET_NAME).java
+  options.compilerArgs.add("-proc:none")
+}
+
+sourceSets {
+  main {
+    java {
+      srcDirs(project.file("${project.projectDir}/src/generated/"))
+    }
+  }
 }
 
 java {

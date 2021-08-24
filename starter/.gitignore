@@ -187,3 +187,5 @@ nbdist/
 !.vscode/launch.json
 !.vscode/extensions.json
 /build/
+
+/src/generated/

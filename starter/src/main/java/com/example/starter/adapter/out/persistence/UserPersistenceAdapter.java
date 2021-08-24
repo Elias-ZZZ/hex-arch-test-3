@@ -17,6 +17,7 @@ public class UserPersistenceAdapter implements LoadUserListPort, RegisterNewUser
 
   @Override
   public List<User> loadUserList() {
+    System.out.println("Llegando al repo");
     return userRepository
       .retrieveUserList()
       .map(userDBM ->

@@ -1,35 +1,35 @@
-package com.example.starter.adapter.out.persistence;
+package com.example.starter.adapter.in.web;
 
 import io.vertx.codegen.annotations.DataObject;
 import io.vertx.core.json.JsonObject;
 
 @DataObject(generateConverter = true)
-public class UserDBM {
+public class UserDTO {
   private Long id;
   private String name;
   private String nickName;
   private String password;
 
-  public UserDBM(Long id, String name, String nickName, String password) {
+  public UserDTO(Long id, String name, String nickName, String password) {
     this.id = id;
     this.name = name;
     this.nickName = nickName;
     this.password = password;
   }
 
-  public UserDBM(String name, String nickName, String password) {
+  public UserDTO(String name, String nickName, String password) {
     this.name = name;
     this.nickName = nickName;
     this.password = password;
   }
 
-  public UserDBM(JsonObject json) {
-    UserDBMConverter.fromJson(json,this);
+  public UserDTO(JsonObject json) {
+    UserDTOConverter.fromJson(json, this);
   }
 
   public JsonObject toJson() {
     JsonObject json = new JsonObject();
-    UserDBMConverter.toJson(this,json);
+    UserDTOConverter.toJson(this, json);
     return json;
   }
 

@@ -20,6 +20,16 @@ public class RegisterUserCommand {
     requireNonNull(password);
   }
 
+  public RegisterUserCommand(String name, String nickName, String password) {
+    this.name = name;
+    this.nickName = nickName;
+    this.password = password;
+
+    requireNonNull(name);
+    requireNonNull(nickName);
+    requireNonNull(password);
+  }
+
   public Long getId() {
     return id;
   }

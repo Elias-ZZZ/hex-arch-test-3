@@ -25,6 +25,7 @@ public class RegisterUserService implements RegisterUserUseCase {
     List<User> userList = loadUserListPort.loadUserList();
     if(!newUser.isNicknameAvailable(userList))
       throw new IllegalStateException("El nick " + newUser.getNickName() + "ya esta en uso");
+    System.out.println("Algo mas");
     registerNewUserPort.registerNewUser(newUser);
   }
 }
